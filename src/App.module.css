@@ -17,6 +17,12 @@
   margin-bottom: 20px;
 }
 
+.eventsContainer {
+  width: 600px;
+  max-width: calc(100vw - 2rem);
+  margin: auto;
+}
+
 .item {
   background-color: white;
   border-radius: 0.5rem;
@@ -25,17 +31,22 @@
   box-shadow:
     0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  height: var(--message-height);
-  overflow: hidden;
   animation: slideDown 0.5s ease-out;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.item a {
+  text-decoration: underline;
 }
 
 .comment {
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
@@ -63,7 +74,7 @@
     margin-bottom: 0;
   }
   to {
-    height: var(--message-height);
+    height: 100%;
     padding-top: 1rem;
     padding-bottom: 1rem;
     margin-bottom: 1rem;

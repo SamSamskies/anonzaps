@@ -3,6 +3,7 @@ import styles from "./App.module.css";
 import { SimplePool } from "nostr-tools/pool";
 import lightBolt11Decoder from "light-bolt11-decoder";
 import { QRCodeSVG } from "qrcode.react";
+import { NoteContent } from "./NoteContent.jsx";
 
 const getEvents = async () => {
   const pool = new SimplePool();
@@ -88,19 +89,30 @@ function App() {
           size={200}
         />
       </div>
-      {events
-        .sort((a, b) => b.zapAmount - a.zapAmount)
-        .map(({ id, comment, zapAmount, createdAt }) => (
-          <div key={id} className={styles.item}>
-            <div className={styles.details}>
-              <span className={styles.zapAmount}>{zapAmount} sats</span>
-              <span className={styles.createdAt}>
-                {new Date(createdAt * 1000).toLocaleString()}
-              </span>
+      <div className={styles.eventsContainer}>
+        {events
+          .sort((a, b) => b.zapAmount - a.zapAmount)
+          .map(({ id, comment, zapAmount, createdAt }) => (
+            <div key={id} className={styles.item}>
+              <div className={styles.details}>
+                <span className={styles.zapAmount}>{zapAmount} sats</span>
+                <span className={styles.createdAt}>
+                  {new Date(createdAt * 1000).toLocaleString([], {
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  })}
+                </span>
+              </div>
+              <div className={styles.comment}>
+                <NoteContent content={comment} />
+              </div>
             </div>
-            <div className={styles.comment}>{comment}</div>
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 }
