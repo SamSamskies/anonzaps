@@ -62,10 +62,6 @@ const getEvents = async () => {
 function App() {
   const [events, setEvents] = useState([]);
   const getAndSetEventsIfNecessary = async () => {
-    if (document.visibilityState === "hidden") {
-      return;
-    }
-
     const normalizedEvents = await getEvents();
 
     if (normalizedEvents.length === 0) {
@@ -78,7 +74,13 @@ function App() {
   useEffect(() => {
     getAndSetEventsIfNecessary().catch(console.error);
 
-    const interval = setInterval(getAndSetEventsIfNecessary, 20000);
+    const interval = setInterval(() => {
+      if (document.visibilityState === "hidden") {
+        return;
+      }
+
+      return getAndSetEventsIfNecessary();
+    }, 20000);
 
     return () => clearInterval(interval);
   }, []);
